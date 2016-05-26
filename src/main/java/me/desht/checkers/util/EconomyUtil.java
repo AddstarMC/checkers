@@ -1,6 +1,5 @@
 package me.desht.checkers.util;
 
-import me.desht.checkers.CheckersPlugin;
 import me.desht.dhutils.LogUtils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.OfflinePlayer;

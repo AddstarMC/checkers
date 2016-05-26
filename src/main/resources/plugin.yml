@@ -3,7 +3,7 @@ description: Play Checkers
 author: desht
 website: http://dev.bukkit.org/server-mods/checkers
 main: me.desht.checkers.CheckersPlugin
-version: ${project.version}
+version: ${plugin.version}
 softdepend: [ Vault, WorldEdit, ScrollingMenuSign, dynmap, Landslide ]
 
 commands:
