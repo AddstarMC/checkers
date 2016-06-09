@@ -149,6 +149,8 @@ public class CheckersGameManager {
 	 * @param player		The player who is creating the game
 	 * @param gameName		Name of the game - may be null, in which case a name will be generated
 	 * @param boardName		Name of the board for the game - may be null, in which case a free board will be picked
+	 * @param colour 		The player colour
+	 * @param ruleId 		The Rule
 	 * @return	The game object
 	 * @throws CheckersException	if there is any problem creating the game
 	 */

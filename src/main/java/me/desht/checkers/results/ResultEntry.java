@@ -3,10 +3,7 @@ package me.desht.checkers.results;
 import me.desht.checkers.game.CheckersGame;
 import me.desht.checkers.game.CheckersGame.GameResult;
 import me.desht.checkers.model.PlayerColour;
-import me.desht.checkers.player.CheckersPlayer;
-import me.desht.checkers.player.HumanCheckersPlayer;
 import me.desht.dhutils.Debugger;
-import org.bukkit.entity.Player;
 
 import java.sql.*;
 

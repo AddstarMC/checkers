@@ -161,7 +161,7 @@ public class ProtectionListener extends CheckersBaseListener {
 	}
 
 	/**
-	 * Cancelling liquid flow events makes it possible to use water & lava for walls & pieces.
+	 * Cancelling liquid flow events makes it possible to use water and lava for walls and pieces.
 	 *
 	 * @param event the event
 	 */

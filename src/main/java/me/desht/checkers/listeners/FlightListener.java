@@ -10,7 +10,6 @@ import me.desht.checkers.view.BoardViewManager;
 import me.desht.dhutils.Debugger;
 import me.desht.dhutils.MiscUtil;
 import me.desht.dhutils.block.BlockType;
-import me.desht.dhutils.block.MaterialWithData;
 import me.desht.dhutils.cuboid.Cuboid;
 import me.desht.dhutils.cuboid.Cuboid.CuboidDirection;
 import org.bukkit.Bukkit;
@@ -55,6 +54,7 @@ public class FlightListener extends CheckersBaseListener {
 
 	/**
 	 * Globally enable or disable board flight for all players.
+	 * @param enabled   Boolean to enable
 	 */
 	public void setEnabled(boolean enabled) {
 		if (enabled == this.enabled)

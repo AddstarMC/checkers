@@ -56,6 +56,7 @@ public abstract class ResultViewBase {
 	 *
 	 * @param count	The number of players to return
 	 * @param excludeAI true if AI scores should be excluded
+	 * @return a List of {@link ScoreRecord}s
 	 * @throws CheckersException if called before data has finished being restored from DB
 	 */
 	public List<ScoreRecord> getScores(final int count, final boolean excludeAI) {

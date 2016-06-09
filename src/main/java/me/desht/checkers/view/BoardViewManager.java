@@ -130,7 +130,7 @@ public class BoardViewManager {
 	}
 
 	/**
-	 * Check if a location is any part of any board including the frame & enclosure.
+	 * Check if a location is any part of any board including the frame and enclosure.
 	 *
 	 * @param loc	location to check
 	 * @return the boardview that matches, or null if none
@@ -229,6 +229,7 @@ public class BoardViewManager {
 	 * @param loc location of the origin (centre of A1 square)
 	 * @param rotation the board rotation (which direction black faces)
 	 * @param style the board style name
+	 * @param size an int the size
 	 * @return a fully initialised and painted board
 	 */
 	public BoardView createBoard(String boardName, Location loc, BoardRotation rotation, String style, int size) {

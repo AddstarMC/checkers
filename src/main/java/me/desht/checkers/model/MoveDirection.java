@@ -12,7 +12,7 @@ public enum MoveDirection {
 
 	private final int rowOff, colOff;
 
-	private MoveDirection(int rowOff, int colOff) {
+	MoveDirection(int rowOff, int colOff) {
 		this.rowOff = rowOff;
 		this.colOff = colOff;
 	}
@@ -32,6 +32,7 @@ public enum MoveDirection {
 	}
 
 	/**
+	 * @param dist the dist to offset
 	 * @return the rowOff
 	 */
 	public int getRowOffset(int dist) {
@@ -39,6 +40,7 @@ public enum MoveDirection {
 	}
 
 	/**
+	 * @param dist the dist to offset
 	 * @return the colOff
 	 */
 	public int getColOffset(int dist) {

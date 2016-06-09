@@ -90,7 +90,7 @@ public abstract class GameRules {
 
 	/**
 	 * Calculate all possible legal moves for the given position.
-	 *
+	 * @param position  the position to calc from
 	 * @return an array of legal moves
 	 */
 	public Move[] calculateLegalMoves(Position position) {
@@ -134,9 +134,10 @@ public abstract class GameRules {
 
 	/**
 	 * Get a list of the legal moves that can be made from the given square.
-	 *
+	 * @param position the position to start from
 	 * @param square the board square
 	 * @param onlyJumps true if only jump moves should be returned
+	 *
 	 * @return a list of the legal moves
 	 */
 	public Move[] getLegalMoves(Position position, RowCol square, boolean onlyJumps) {

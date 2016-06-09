@@ -33,7 +33,7 @@ public abstract class YesNoResponse extends ExpectBase {
 	 *
 	 * @param player the player
 	 * @param isAccepted true if accepted, false if declined
-	 * @throws CheckersException
+	 * @throws CheckersException an exception
 	 */
 	public static void handleYesNoResponse(Player player, boolean isAccepted) {
 		ResponseHandler respHandler = CheckersPlugin.getInstance().getResponseHandler();

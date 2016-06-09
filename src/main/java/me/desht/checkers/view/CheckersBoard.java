@@ -244,8 +244,8 @@ public class CheckersBoard {
 	 *
 	 * @param loc		location to check
 	 * @param fudge		fudge factor - check within a slightly larger area
-	 * @return true if the location is *anywhere* within the board <br>
-	 *         including frame & enclosure
+	 * @return true if the location is *anywhere* within the board
+	 *         including frame and enclosure
 	 */
 	public boolean isPartOfBoard(Location loc, int fudge) {
 		Cuboid o = getFullBoard();

@@ -1,11 +1,9 @@
 package me.desht.checkers.commands;
 
 import me.desht.checkers.CheckersException;
-import me.desht.checkers.CheckersPlugin;
 import me.desht.checkers.Messages;
 import me.desht.checkers.game.CheckersGame;
 import me.desht.checkers.game.CheckersGameManager;
-import me.desht.checkers.util.CheckersUtils;
 import me.desht.checkers.util.EconomyUtil;
 import me.desht.dhutils.MiscUtil;
 

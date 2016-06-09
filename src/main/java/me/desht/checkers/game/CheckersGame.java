@@ -698,7 +698,7 @@ public class CheckersGame implements CheckersPersistable {
 		CheckersPlayer offeredPlayer = getPlayer(offeringPlayer.getColour().getOtherColour());
 
 		if (offeredPlayer.getId().equals(offeringPlayer.getId())) {
-			// same player playing black & white - just undo
+			// same player playing black and white - just undo
 			undoMove(playerId);
 		} else {
 			offeringPlayer.statusMessage(Messages.getString("Offers.youOfferUndo", offeredPlayer.getId()));

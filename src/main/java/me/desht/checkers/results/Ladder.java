@@ -14,6 +14,7 @@ public class Ladder extends ResultViewBase {
 
 	/**
 	 * Create a new Ladder object.
+	 * @param handler the results handler
 	 */
 	public Ladder(Results handler) {
 		super(handler, "ladder");

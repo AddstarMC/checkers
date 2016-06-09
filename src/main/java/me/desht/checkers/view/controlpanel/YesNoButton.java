@@ -12,7 +12,6 @@ import me.desht.checkers.responses.UndoResponse;
 import me.desht.checkers.responses.YesNoResponse;
 import me.desht.dhutils.responsehandler.ResponseHandler;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 

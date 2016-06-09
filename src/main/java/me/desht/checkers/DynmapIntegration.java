@@ -65,7 +65,7 @@ public class DynmapIntegration implements Listener {
 	}
 
 	/**
-	 * Check if dynmap integration is active.  Integration is activated once all boards & games have
+	 * Check if dynmap integration is active.  Integration is activated once all boards and games have
 	 * been restored from disk, at the end of onEnable(), iff "dynmap.enabled" is true.  Integration
 	 * will also be activated if the "dynmap.enabled" is changed to true later on, and will be deactivated
 	 * if "dynmap.enabled" is set to false at any time.

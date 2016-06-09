@@ -137,11 +137,9 @@ public class DirectoryStructure {
 	 * Find a YAML resource file in the given directory.  Look first in the custom/ subdirectory
 	 * and then in the directory itself.
 	 *
-	 * @param dir
-	 * @param filename
-	 * @param saving
-	 * @return
-	 * @throws CheckersException
+	 * @param dir the directory
+	 * @param filename the filename
+	 * @return the File
 	 */
 	public static File getResourceFileForLoad(File dir, String filename) {
 		// try the lower-cased form first, if that fails try the exact filename
@@ -161,8 +159,8 @@ public class DirectoryStructure {
 	/**
 	 * Check if the given file is a custom resource, i.e. it's a custom/ subdirectory.
 	 *
-	 * @param path
-	 * @return
+	 * @param path the Path to check
+	 * @return {@code True} if its custom path
 	 */
 	public static boolean isCustom(File path) {
 		return path.getParentFile().getName().equalsIgnoreCase("custom");
@@ -171,10 +169,9 @@ public class DirectoryStructure {
 	/**
 	 * Find a YAML resource in the custom/ subdirectory of the given directory.
 	 *
-	 * @param dir
-	 * @param filename
-	 * @return
-	 * @throws CheckersException
+	 * @param dir the directory
+	 * @param filename the filename
+	 * @return the file
 	 */
 	public static File getResourceFileForSave(File dir, String filename) {
 		return new File(dir, "custom" + File.separator + filename.toLowerCase() + ".yml");

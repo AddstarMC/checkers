@@ -3,7 +3,6 @@ package me.desht.checkers.view.controlpanel;
 import me.desht.checkers.CheckersPlugin;
 import me.desht.checkers.game.CheckersGame;
 import me.desht.checkers.game.CheckersGame.GameState;
-import me.desht.checkers.util.CheckersUtils;
 
 import me.desht.checkers.util.EconomyUtil;
 import org.bukkit.event.block.Action;
