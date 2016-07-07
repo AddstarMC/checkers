@@ -19,8 +19,8 @@ import java.util.UUID;
 
 public class PlayerTracker extends CheckersBaseListener {
 
-	private final Map<UUID, PersistableLocation> lastPos = new HashMap<UUID, PersistableLocation>();
-	private final Map<UUID, Long> loggedOutAt = new HashMap<UUID, Long>();
+	private final Map<UUID, PersistableLocation> lastPos = new HashMap<>();
+	private final Map<UUID, Long> loggedOutAt = new HashMap<>();
 
 	public PlayerTracker(CheckersPlugin plugin) {
 		super(plugin);
@@ -86,11 +86,11 @@ public class PlayerTracker extends CheckersBaseListener {
 		lastPos.put(player.getUniqueId(), new PersistableLocation(loc));
 	}
 
-	public void playerLeft(Player player) {
+	private void playerLeft(Player player) {
 		loggedOutAt.put(player.getUniqueId(), System.currentTimeMillis());
 	}
 
-	public void playerRejoined(Player player) {
+	private void playerRejoined(Player player) {
 		loggedOutAt.remove(player.getUniqueId());
 	}
 

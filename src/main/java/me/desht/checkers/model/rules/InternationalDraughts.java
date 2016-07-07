@@ -36,7 +36,7 @@ public class InternationalDraughts extends GameRules {
 		if (moving == PieceType.WHITE && to.getRow() < from.getRow() || moving == PieceType.BLACK && to.getRow() > from.getRow()) {
 			return null;  // pieces can't move backwards
 		}
-		List<Move> res = new ArrayList<Move>(1);
+		List<Move> res = new ArrayList<>(1);
 		res.add(new Move(from, from.add(direction)));
 		return res;
 	}
@@ -47,7 +47,7 @@ public class InternationalDraughts extends GameRules {
 		if (!isValidSquare(over)) {
 			return null;
 		}
-		List<Move> res = new ArrayList<Move>();
+		List<Move> res = new ArrayList<>();
 		PieceType moving = position.getPieceAt(from);
 		if (moving.isKing()) {
 			// flying kings - move and capture any distance

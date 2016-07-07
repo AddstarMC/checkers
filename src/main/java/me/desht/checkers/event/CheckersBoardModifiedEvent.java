@@ -15,7 +15,7 @@ public class CheckersBoardModifiedEvent extends CheckersBoardEvent {
 
 	public CheckersBoardModifiedEvent(BoardView boardView, Set<String> changedAttributes) {
 		super(boardView);
-		changed = new HashSet<String>(changedAttributes);
+		changed = new HashSet<>(changedAttributes);
 	}
 
 	public Set<String> getChangedAttributes() {

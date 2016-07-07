@@ -33,14 +33,14 @@ public class FlightListener extends CheckersBaseListener {
 
 	// notes if the player is currently allowed to fly due to being on/near a board
 	// maps the player name to the previous flight speed for the player
-	private final Map<UUID,PreviousSpeed> allowedToFly = new HashMap<UUID,PreviousSpeed>();
+	private final Map<UUID,PreviousSpeed> allowedToFly = new HashMap<>();
 	// cache of the regions in which board flight is allowed
-	private final List<Cuboid> flightRegions = new ArrayList<Cuboid>();
+	private final List<Cuboid> flightRegions = new ArrayList<>();
 	// notes when a player was last messaged about flight, to reduce spam
-	private final Map<UUID,Long> lastMessagedIn = new HashMap<UUID,Long>();
-	private final Map<UUID,Long> lastMessagedOut = new HashMap<UUID,Long>();
+	private final Map<UUID,Long> lastMessagedIn = new HashMap<>();
+	private final Map<UUID,Long> lastMessagedOut = new HashMap<>();
 	// notes when player was last bounced back while flying
-	private final Map<UUID,Long> lastBounce = new HashMap<UUID, Long>();
+	private final Map<UUID,Long> lastBounce = new HashMap<>();
 
 	private boolean enabled;
 	private boolean captive;
@@ -117,13 +117,10 @@ public class FlightListener extends CheckersBaseListener {
 			// If switching away from creative mode and on/near a board, allow flight to continue.
 			// Seems a delayed task is needed here - calling setAllowFlight() directly from the event handler
 			// leaves getAllowFlight() returning true, but the player is still not allowed to fly.  (CraftBukkit bug?)
-			Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-				@Override
-				public void run() {
-					player.setAllowFlight(true);
-					player.setFlying(isFlying);
-				}
-			});
+			Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                player.setAllowFlight(true);
+                player.setFlying(isFlying);
+            });
 		}
 	}
 
@@ -184,17 +181,14 @@ public class FlightListener extends CheckersBaseListener {
 
 		// Seems a delayed task is needed here - calling setAllowFlight() directly from the event handler
 		// leaves getAllowFlight() returning true, but the player is still not allowed to fly.  (CraftBukkit bug?)
-		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-			@Override
-			public void run() {
-				if (crossWorld) {
-					// Player flight seems to be automatically disabled when the world changes, so in that case we
-					// force a re-enablement.  Without this, the following call to setFlightAllowed() would be ignored.
-					setFlightAllowed(player, false);
-				}
-				setFlightAllowed(player, boardFlightAllowed);
-			}
-		});
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            if (crossWorld) {
+                // Player flight seems to be automatically disabled when the world changes, so in that case we
+                // force a re-enablement.  Without this, the following call to setFlightAllowed() would be ignored.
+                setFlightAllowed(player, false);
+            }
+            setFlightAllowed(player, boardFlightAllowed);
+        });
 	}
 
 	/**
@@ -260,7 +254,7 @@ public class FlightListener extends CheckersBaseListener {
 	 * @param loc the player's location
 	 * @return true if flight is allowed
 	 */
-	public Cuboid getFlightRegion(Location loc) {
+	private Cuboid getFlightRegion(Location loc) {
 		for (Cuboid c : flightRegions) {
 			if (c.contains(loc))
 				return c;
@@ -294,16 +288,13 @@ public class FlightListener extends CheckersBaseListener {
 			player.setWalkSpeed((float) plugin.getConfig().getDouble("flying.walk_speed"));
 			if (plugin.getConfig().getBoolean("flying.auto")) {
 				final int blockId = player.getLocation().subtract(0, 2, 0).getBlock().getTypeId();
-				Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-					@Override
-					public void run() {
-						if (!BlockType.canPassThrough(blockId)) {
-							// give player a kick upwards iff they're standing on something solid
-							player.setVelocity(new Vector(0, 1.0, 0));
-						}
-						player.setFlying(true);
-					}
-				});
+				Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    if (!BlockType.canPassThrough(blockId)) {
+                        // give player a kick upwards iff they're standing on something solid
+                        player.setVelocity(new Vector(0, 1.0, 0));
+                    }
+                    player.setFlying(true);
+                });
 			}
 			long last = lastMessagedIn.containsKey(playerId) ? lastMessagedIn.get(playerId) : 0;
 			if (now - last > MESSAGE_COOLDOWN  && player.getGameMode() != GameMode.CREATIVE) {
@@ -367,7 +358,7 @@ public class FlightListener extends CheckersBaseListener {
 		private final float walkSpeed;
 
 		public PreviousSpeed(Player p) {
-			player = new WeakReference<Player>(p);
+			player = new WeakReference<>(p);
 			flySpeed = p.getFlySpeed();
 			walkSpeed = p.getWalkSpeed();
 			Debugger.getInstance().debug("player " + p.getDisplayName() + ": store previous speed: walk=" + walkSpeed + " fly=" + flySpeed);

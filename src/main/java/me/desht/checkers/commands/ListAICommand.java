@@ -11,6 +11,7 @@ import me.desht.dhutils.MessagePager;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 public class ListAICommand extends AbstractCheckersCommand {
 
@@ -28,7 +29,7 @@ public class ListAICommand extends AbstractCheckersCommand {
 
 		if (args.length == 0) {
 			List<AIDefinition> aiDefs = cPlugin.getAIFactory().listAIDefinitions(true);
-			List<String> lines = new ArrayList<String>(aiDefs.size());
+			List<String> lines = new ArrayList<>(aiDefs.size());
 			for (AIDefinition aiDef : aiDefs) {
 				if (!aiDef.isEnabled())
 					continue;
@@ -48,6 +49,7 @@ public class ListAICommand extends AbstractCheckersCommand {
 		return true;
 	}
 
+	@NotNull
 	@Override
 	public List<String> onTabComplete(Plugin plugin, CommandSender sender, String[] args) {
 		if (args.length == 1) {

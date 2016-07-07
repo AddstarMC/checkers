@@ -32,8 +32,8 @@ public class BoardViewManager {
 
 	private static BoardViewManager instance = null;
 
-	private final Map<String, BoardView> gameBoards = new HashMap<String, BoardView>();
-	private final Map<String, Set<File>> deferred = new HashMap<String, Set<File>>();
+	private final Map<String, BoardView> gameBoards = new HashMap<>();
+	private final Map<String, Set<File>> deferred = new HashMap<>();
 	private PersistableLocation globalTeleportOutDest = null;
 
 	private BoardViewManager() {
@@ -106,8 +106,8 @@ public class BoardViewManager {
 	}
 
 	public Collection<BoardView> listBoardViewsSorted() {
-		SortedSet<String> sorted = new TreeSet<String>(gameBoards.keySet());
-		List<BoardView> res = new ArrayList<BoardView>();
+		SortedSet<String> sorted = new TreeSet<>(gameBoards.keySet());
+		List<BoardView> res = new ArrayList<>();
 		for (String name : sorted) {
 			res.add(gameBoards.get(name));
 		}
@@ -253,7 +253,7 @@ public class BoardViewManager {
 	 */
 	public void deferLoading(String worldName, File f) {
 		if (!deferred.containsKey(worldName)) {
-			deferred.put(worldName, new HashSet<File>());
+			deferred.put(worldName, new HashSet<>());
 		}
 		deferred.get(worldName).add(f);
 	}
@@ -280,7 +280,7 @@ public class BoardViewManager {
 	 * @param worldName name of the world
 	 */
 	public void unloadBoardsForWorld(String worldName) {
-		for (BoardView bv : new ArrayList<BoardView>(listBoardViews())) {
+		for (BoardView bv : new ArrayList<>(listBoardViews())) {
 			if (bv.getWorldName().equals(worldName)) {
 				bv.deleteTemporary();
 				File f = new File(bv.getSaveDirectory(), PersistenceHandler.makeSafeFileName(bv.getName()) + ".yml");

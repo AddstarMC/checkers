@@ -19,8 +19,8 @@ import com.google.common.base.Joiner;
 
 public class Messages {
 
-	static Configuration fallbackMessages = null;
-	static Configuration messages = null;
+	private static Configuration fallbackMessages = null;
+	private static Configuration messages = null;
 
 	public static void init(String locale) {
 		File langDir = DirectoryStructure.getLanguagesDirectory();
@@ -70,7 +70,7 @@ public class Messages {
 		// ensure that the config we're loading has all of the messages that the fallback has
 		// make a note of any missing translations
 		if (fallbackMessages != null && conf.getKeys(true).size() != fallbackMessages.getKeys(true).size()) {
-			Map<String,String> missingKeys = new HashMap<String, String>();
+			Map<String,String> missingKeys = new HashMap<>();
 			for (String key : fallbackMessages.getKeys(true)) {
 				if (!conf.contains(key) && !fallbackMessages.isConfigurationSection(key)) {
 					conf.set(key, fallbackMessages.get(key));
@@ -125,7 +125,7 @@ public class Messages {
 		List<String> l;
 		if (messages == null) {
 			LogUtils.warning("**No messages catalog!?!");
-			l = new ArrayList<String>();
+			l = new ArrayList<>();
 			l.add("!" + key + "!");
 		} else {
 			l = messages.getStringList(key);
@@ -133,7 +133,7 @@ public class Messages {
 				LogUtils.warning("Missing message key '" + key + "'");
 				l = fallbackMessages.getStringList(key);
 				if (l == null) {
-					l = new ArrayList<String>();
+					l = new ArrayList<>();
 					l.add("!" + key + "!");
 				}
 			}

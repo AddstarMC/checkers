@@ -4,11 +4,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import me.desht.dhutils.PermissionUtils;
 
-public abstract class AbstractSignButton extends AbstractSignLabel {
+abstract class AbstractSignButton extends AbstractSignLabel {
 
 	private final String permissionNode;
 
-	public AbstractSignButton(ControlPanel panel, String labelKey, String permissionNode, int x, int y) {
+	AbstractSignButton(ControlPanel panel, String labelKey, String permissionNode, int x, int y) {
 		super(panel, labelKey, x, y);
 
 		this.permissionNode = permissionNode;
@@ -30,14 +30,14 @@ public abstract class AbstractSignButton extends AbstractSignLabel {
 	}
 
 	@Override
-	public boolean isReactive() {
+	boolean isReactive() {
 		return true;
 	}
 
-	public boolean isReactive(PlayerInteractEvent event) {
+	boolean isReactive(PlayerInteractEvent event) {
 		return false;
 	}
 
-	public abstract void execute(PlayerInteractEvent event);
+	protected abstract void execute(PlayerInteractEvent event);
 
 }

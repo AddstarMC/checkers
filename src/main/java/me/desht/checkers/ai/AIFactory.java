@@ -2,6 +2,7 @@ package me.desht.checkers.ai;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +20,6 @@ import me.desht.checkers.Messages;
 import me.desht.checkers.game.CheckersGame;
 import me.desht.checkers.model.PlayerColour;
 import me.desht.dhutils.Debugger;
-import me.desht.dhutils.JARUtil;
 import me.desht.dhutils.LogUtils;
 import me.desht.dhutils.MiscUtil;
 
@@ -33,9 +33,9 @@ public class AIFactory {
 	private static final String AI_ALIASES_FILE = "AI.yml";
 	private static final String AI_CORE_DEFS = "/AI_settings.yml";
 
-	private final HashMap<String, CheckersAI> runningAIs = new HashMap<String, CheckersAI>();
-	private final Map<String, AIDefinition> allAliases = new HashMap<String, AIDefinition>();
-	private final Map<String, AIDefinition> coreDefs = new HashMap<String, AIDefinition>();
+	private final HashMap<String, CheckersAI> runningAIs = new HashMap<>();
+	private final Map<String, AIDefinition> allAliases = new HashMap<>();
+	private final Map<String, AIDefinition> coreDefs = new HashMap<>();
 
 	public AIFactory() {
 		loadAIDefinitions();
@@ -45,7 +45,7 @@ public class AIFactory {
 		return getNewAI(game, aiName, false, colour);
 	}
 
-	public CheckersAI getNewAI(CheckersGame game, String aiName, boolean forceNew, PlayerColour colour) {
+	private CheckersAI getNewAI(CheckersGame game, String aiName, boolean forceNew, PlayerColour colour) {
 		if (!forceNew) {
 			int max = CheckersPlugin.getInstance().getConfig().getInt("ai.max_ai_games");
 			if (max == 0) {
@@ -77,7 +77,7 @@ public class AIFactory {
 	 * @param aiName the AI name
 	 * @return true if this AI is available
 	 */
-	public boolean isAvailable(String aiName) {
+	private boolean isAvailable(String aiName) {
 		return !runningAIs.containsKey(aiName);
 	}
 
@@ -85,7 +85,7 @@ public class AIFactory {
 	 * Clear down all running AIs. Called on disable.
 	 */
 	public void clearDown() {
-		List<CheckersAI> l = new ArrayList<CheckersAI>();
+		List<CheckersAI> l = new ArrayList<>();
 		for (Entry<String, CheckersAI> e : runningAIs.entrySet()) {
 			l.add(e.getValue());
 		}
@@ -99,14 +99,14 @@ public class AIFactory {
 	}
 	public List<AIDefinition> listAIDefinitions(boolean isSorted) {
 		if (isSorted) {
-			SortedSet<String> sorted = new TreeSet<String>(allAliases.keySet());
-			List<AIDefinition> res = new ArrayList<AIDefinition>();
+			SortedSet<String> sorted = new TreeSet<>(allAliases.keySet());
+			List<AIDefinition> res = new ArrayList<>();
 			for (String name : sorted) {
 				res.add(allAliases.get(name));
 			}
 			return res;
 		} else {
-			return new ArrayList<AIDefinition>(allAliases.values());
+			return new ArrayList<>(allAliases.values());
 		}
 	}
 
@@ -141,7 +141,7 @@ public class AIFactory {
 	 * @throws CheckersException if there are no free AIs
 	 */
 	public String getFreeAIName() {
-		List<String> free = new ArrayList<String>();
+		List<String> free = new ArrayList<>();
 		for (String k : allAliases.keySet()) {
 			if (isAvailable(k) && allAliases.get(k).isEnabled()) {
 				free.add(k);
@@ -160,14 +160,13 @@ public class AIFactory {
 
 		// first pull in the core definitions from the JAR file resource...
 		try {
-			JARUtil ju = new JARUtil(CheckersPlugin.getInstance());
-			InputStream in = ju.openResourceNoCache(AI_CORE_DEFS);
-			coreAIdefs = YamlConfiguration.loadConfiguration(in);
+			InputStream in = CheckersPlugin.getInstance().getResource(AI_CORE_DEFS);
+			InputStreamReader reader = new InputStreamReader(in);
+			coreAIdefs = YamlConfiguration.loadConfiguration(reader);
 		} catch (Exception e) {
 			LogUtils.severe("Can't load AI definitions: " + e.getMessage());
 			return;
 		}
-
 		// now load the aliases file
 		File aiAliasesFile = new File(DirectoryStructure.getPluginDirectory(), AI_ALIASES_FILE);
 		Configuration aliasesConf = YamlConfiguration.loadConfiguration(aiAliasesFile);
@@ -245,7 +244,7 @@ public class AIFactory {
 		}
 
 		public List<String> getDetails() {
-			List<String> res = new ArrayList<String>();
+			List<String> res = new ArrayList<>();
 			res.add("AI " + getDisplayName() + " (" + getImplClassName() + ") :");
 			for (String k : MiscUtil.asSortedList(params.getKeys(false))) {
 				res.add(ChatColor.DARK_RED + "* " + ChatColor.WHITE + k + ": " + ChatColor.YELLOW + params.get(k));

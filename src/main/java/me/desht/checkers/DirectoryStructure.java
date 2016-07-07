@@ -177,10 +177,5 @@ public class DirectoryStructure {
 		return new File(dir, "custom" + File.separator + filename.toLowerCase() + ".yml");
 	}
 
-	public static final FilenameFilter ymlFilter = new FilenameFilter() {
-		@Override
-		public boolean accept(File dir, String name) {
-			return name.endsWith(".yml");
-		}
-	};
+	public static final FilenameFilter ymlFilter = (dir, name) -> name.endsWith(".yml");
 }

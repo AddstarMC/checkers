@@ -24,7 +24,7 @@ public abstract class ResultViewBase {
 	ResultViewBase(Results handler, String viewType) {
 		this.viewType = viewType;
 		this.handler = handler;
-		this.scoreMap = new HashMap<String, Integer>();
+		this.scoreMap = new HashMap<>();
 	}
 
 	public abstract void addResult(ResultEntry re);
@@ -63,20 +63,16 @@ public abstract class ResultViewBase {
 		if (!handler.isDatabaseLoaded()) {
 			throw new CheckersException("No results data is available yet");
 		}
-		List<ScoreRecord> res = new ArrayList<ScoreRecord>();
+		List<ScoreRecord> res = new ArrayList<>();
 
-		List<Entry<String, Integer>> list = new ArrayList<Entry<String,Integer>>();
+		List<Entry<String, Integer>> list = new ArrayList<>();
 		for (Entry<String,Integer> entry : scoreMap.entrySet()) {
 			if (excludeAI && CheckersAI.isAIPlayer(entry.getKey())) {
 				continue;
 			}
 			list.add(entry);
 		}
-		Collections.sort(list, new Comparator<Entry<String, Integer>>() {
-			public int compare(Entry<String, Integer> m1, Entry<String, Integer> m2) {
-				return (m2.getValue()).compareTo(m1.getValue());
-			}
-		});
+		Collections.sort(list, (m1, m2) -> (m2.getValue()).compareTo(m1.getValue()));
 		int n = 0;
 		for (Entry<String,Integer> entry : list) {
 			if (count > 0 && n++ > count) {
@@ -88,7 +84,7 @@ public abstract class ResultViewBase {
 		return res;
 	}
 
-	protected void awardPoints(String player, int score) {
+	void awardPoints(String player, int score) {
 		int current = getScore(player);
 		setScore(player, current + score);
 	}
@@ -99,7 +95,7 @@ public abstract class ResultViewBase {
 	 * @param player player's name
 	 * @param score player's score
 	 */
-	public void setScore(String player, int score) {
+	void setScore(String player, int score) {
 		scoreMap.put(player, score);
 		if (updateDatabase) {
 			handler.queueDatabaseUpdate(new ViewScoreUpdate(player, score, viewType));
@@ -113,7 +109,7 @@ public abstract class ResultViewBase {
 	 * @param player	The player to check for
 	 * @return			The player's score
 	 */
-	public int getScore(String player) {
+	int getScore(String player) {
 		if (!scoreMap.containsKey(player)) {
 			scoreMap.put(player, getInitialScore());
 		}

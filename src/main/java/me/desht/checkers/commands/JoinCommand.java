@@ -10,6 +10,7 @@ import me.desht.dhutils.MiscUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class JoinCommand extends AbstractCheckersCommand {
 		return true;
 	}
 
+	@NotNull
 	@Override
 	public List<String> onTabComplete(Plugin plugin, CommandSender sender, String[] args) {
 		if (args.length == 1 && sender instanceof Player) {
@@ -66,7 +68,7 @@ public class JoinCommand extends AbstractCheckersCommand {
 	}
 
 	private List<String> getInvitedGameCompletions(Player player, String prefix) {
-		List<String> res = new ArrayList<String>();
+		List<String> res = new ArrayList<>();
 
 		for (CheckersGame game : CheckersGameManager.getManager().listGames()) {
 			if (game.getName().startsWith(prefix) && game.isOpenInvite() || player.getUniqueId().equals(game.getInvitedId())) {

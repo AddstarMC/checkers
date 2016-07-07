@@ -21,7 +21,7 @@ import java.util.List;
  * a Position object.
  */
 public class SimplePosition implements Position {
-	private final List<PositionListener> listeners = new ArrayList<PositionListener>();
+	private final List<PositionListener> listeners = new ArrayList<>();
 	private PieceType[][] board;
 	private boolean[][] doomed;
 	private GameRules rules;
@@ -38,7 +38,7 @@ public class SimplePosition implements Position {
 		newGame();
 	}
 
-	public SimplePosition(SimplePosition other, boolean copyHistory) {
+	private SimplePosition(SimplePosition other, boolean copyHistory) {
 		rules = other.rules;
 		int l = other.board.length;
 		board = new PieceType[l][l];
@@ -50,7 +50,7 @@ public class SimplePosition implements Position {
 		legalMoves = Arrays.copyOf(other.getLegalMoves(), other.getLegalMoves().length);
 		toMove = other.getToMove();
 		jumpInProgress = other.isJumpInProgress();
-		moveHistory = new ArrayList<Move>();
+		moveHistory = new ArrayList<>();
 		halfMoveClock = other.getHalfMoveClock();
 		if (copyHistory) {
 			Collections.addAll(moveHistory, other.getMoveHistory());
@@ -98,7 +98,7 @@ public class SimplePosition implements Position {
 		}
 		legalMoves = rules.calculateLegalMoves(this);
 		jumpInProgress = false;
-		moveHistory = new ArrayList<Move>();
+		moveHistory = new ArrayList<>();
 		halfMoveClock = 0;
 	}
 
@@ -308,10 +308,10 @@ public class SimplePosition implements Position {
 		}
 
 		// now reset the position to the start and replay all moves up to the previous move
-		List<PositionListener> saved = new ArrayList<PositionListener>();
+		List<PositionListener> saved = new ArrayList<>();
 		saved.addAll(listeners);
 		listeners.clear();
-		List<Move> tmp = new ArrayList<Move>(moveHistory);
+		List<Move> tmp = new ArrayList<>(moveHistory);
 		newGame();
 		for (int i = 0; i <= idx; i++) {
 			makeMove(tmp.get(i));

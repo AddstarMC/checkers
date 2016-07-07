@@ -19,22 +19,18 @@ public class UndoResponse extends YesNoResponse {
 	@Override
 	public void doResponse(final UUID playerId) {
 		final UUID offererId = UUID.fromString(game.getPlayer(offererColour).getId());
-		deferTask(offererId, new Runnable() {
-
-			@Override
-			public void run() {
-				if (accepted) {
-					game.alert(offererId, Messages.getString("Offers.undoOfferAccepted", getPlayerId()));
-					game.undoMove(offererId.toString());
-				} else {
-					game.alert(offererId, Messages.getString("Offers.undoOfferDeclined", getPlayerId()));
-					Player player = Bukkit.getPlayer(playerId);
-					if (player != null) {
-						MiscUtil.statusMessage(player, Messages.getString("Offers.youDeclinedUndoOffer"));
-					}
-				}
-			}
-		});
+		deferTask(offererId, () -> {
+            if (accepted) {
+                game.alert(offererId, Messages.getString("Offers.undoOfferAccepted", getPlayerId()));
+                game.undoMove(offererId.toString());
+            } else {
+                game.alert(offererId, Messages.getString("Offers.undoOfferDeclined", getPlayerId()));
+                Player player = Bukkit.getPlayer(playerId);
+                if (player != null) {
+                    MiscUtil.statusMessage(player, Messages.getString("Offers.youDeclinedUndoOffer"));
+                }
+            }
+        });
 	}
 
 }

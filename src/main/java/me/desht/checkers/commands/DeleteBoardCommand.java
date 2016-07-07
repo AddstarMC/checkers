@@ -9,6 +9,7 @@ import me.desht.dhutils.MiscUtil;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 public class DeleteBoardCommand extends AbstractCheckersCommand {
 
@@ -27,6 +28,7 @@ public class DeleteBoardCommand extends AbstractCheckersCommand {
 		return true;
 	}
 
+	@NotNull
 	@Override
 	public List<String> onTabComplete(Plugin plugin, CommandSender sender, String[] args) {
 		if (args.length == 1) {

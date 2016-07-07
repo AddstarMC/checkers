@@ -4,9 +4,9 @@ import me.desht.checkers.view.BoardView;
 
 public abstract class CheckersBoardEvent extends CheckersEvent {
 
-	protected final BoardView boardView;
+	private final BoardView boardView;
 
-	public CheckersBoardEvent(BoardView boardView) {
+	CheckersBoardEvent(BoardView boardView) {
 		this.boardView = boardView;
 	}
 

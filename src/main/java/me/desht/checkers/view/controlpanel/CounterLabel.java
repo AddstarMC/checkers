@@ -1,10 +1,10 @@
 package me.desht.checkers.view.controlpanel;
 
-public abstract class CounterLabel extends AbstractSignLabel {
+abstract class CounterLabel extends AbstractSignLabel {
 
 	private int count;
 
-	public CounterLabel(ControlPanel panel, String labelKey, int x, int y) {
+	CounterLabel(ControlPanel panel, String labelKey, int x, int y) {
 		super(panel, labelKey, x, y);
 	}
 

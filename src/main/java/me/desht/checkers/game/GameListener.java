@@ -4,12 +4,12 @@ import me.desht.checkers.model.RowCol;
 import me.desht.checkers.player.CheckersPlayer;
 
 public interface GameListener {
-	public void gameDeleted(CheckersGame game);
-	public void playerAdded(CheckersGame checkersGame, CheckersPlayer checkersPlayer);
-	public void gameStarted(CheckersGame checkersGame);
-	public boolean tryStakeChange(double newStake);
-	public void stakeChanged(double newStake);
-	public boolean tryTimeControlChange(String tcSpec);
-	public void timeControlChanged(String tcSpec);
-	public void selectSquare(RowCol square);
+	void gameDeleted(CheckersGame game);
+	void playerAdded(CheckersGame checkersGame, CheckersPlayer checkersPlayer);
+	void gameStarted(CheckersGame checkersGame);
+	boolean tryStakeChange(double newStake);
+	void stakeChanged(double newStake);
+	boolean tryTimeControlChange(String tcSpec);
+	void timeControlChanged(String tcSpec);
+	void selectSquare(RowCol square);
 }

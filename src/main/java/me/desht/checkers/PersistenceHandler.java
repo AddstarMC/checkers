@@ -23,11 +23,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class PersistenceHandler {
 	public void reload() {
-		List<CheckersGame> games = new ArrayList<CheckersGame>(CheckersGameManager.getManager().listGames());
+		List<CheckersGame> games = new ArrayList<>(CheckersGameManager.getManager().listGames());
 		for (CheckersGame game : games) {
 			game.deleteTemporary();
 		}
-		List<BoardView> views = new ArrayList<BoardView>(BoardViewManager.getManager().listBoardViews());
+		List<BoardView> views = new ArrayList<>(BoardViewManager.getManager().listBoardViews());
 		for (BoardView view : views) {
 			view.deleteTemporary();
 		}

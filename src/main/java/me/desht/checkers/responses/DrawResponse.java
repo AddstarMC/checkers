@@ -20,20 +20,17 @@ public class DrawResponse extends YesNoResponse {
 	@Override
 	public void doResponse(final UUID offereeId) {
 		final UUID offererId = UUID.fromString(game.getPlayer(offererColour).getId());
-		deferTask(offererId, new Runnable() {
-			@Override
-			public void run() {
-				Player player = Bukkit.getPlayer(offereeId);
-				if (player != null) {
-					if (accepted) {
-						game.alert(offererId, Messages.getString("Offers.drawOfferAccepted", getPlayerId()));
-						game.drawn(GameResult.DRAW_AGREED);
-					} else {
-						game.alert(offererId, Messages.getString("Offers.drawOfferDeclined", getPlayerId()));
-						MiscUtil.statusMessage(player, Messages.getString("Offers.youDeclinedDrawOffer"));
-					}
-				}
-			}
-		});
+		deferTask(offererId, () -> {
+            Player player = Bukkit.getPlayer(offereeId);
+            if (player != null) {
+                if (accepted) {
+                    game.alert(offererId, Messages.getString("Offers.drawOfferAccepted", getPlayerId()));
+                    game.drawn(GameResult.DRAW_AGREED);
+                } else {
+                    game.alert(offererId, Messages.getString("Offers.drawOfferDeclined", getPlayerId()));
+                    MiscUtil.statusMessage(player, Messages.getString("Offers.youDeclinedDrawOffer"));
+                }
+            }
+        });
 	}
 }

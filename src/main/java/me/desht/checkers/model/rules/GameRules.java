@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class GameRules {
-	private static final Map<String,GameRules> allRulesets = new LinkedHashMap<String, GameRules>();
+	private static final Map<String,GameRules> allRulesets = new LinkedHashMap<>();
 
 	/**
 	 * Get the rule identifier string, used by getRules(String)
@@ -39,7 +39,7 @@ public abstract class GameRules {
 	 *
 	 * @return true if jump moves are enforced, false otherwise
 	 */
-	public abstract boolean isForcedJump();
+	protected abstract boolean isForcedJump();
 
 	/**
 	 * Check if this ruleset allows promotion on a jump which is not the final jump in a chain.
@@ -56,7 +56,7 @@ public abstract class GameRules {
 	 * @param direction the direction to move
 	 * @return a list of the possible moves, or null if no moves are possible
 	 */
-	public abstract List<Move> getMoves(Position position, RowCol square, MoveDirection direction);
+	protected abstract List<Move> getMoves(Position position, RowCol square, MoveDirection direction);
 
 	/**
 	 * Check if the given player colour can jump from the given board square in the given direction
@@ -66,7 +66,7 @@ public abstract class GameRules {
 	 * @param direction the direction to move
 	 * @return a list of the possible moves, or null if no moves are possible
 	 */
-	public abstract List<Move> getJumps(Position position, RowCol square, MoveDirection direction);
+	protected abstract List<Move> getJumps(Position position, RowCol square, MoveDirection direction);
 
 	/**
 	 * Get the number of rows of pieces each player has at the setActive of the game. The
@@ -84,7 +84,7 @@ public abstract class GameRules {
 	 * @param square the board square
 	 * @return true if the square is valid for this ruleset, false otherwise
 	 */
-	public boolean isValidSquare(RowCol square) {
+	boolean isValidSquare(RowCol square) {
 		return square.getCol() >= 0 && square.getRow() >= 0 && square.getCol() < getBoardSize() && square.getRow() < getBoardSize();
 	}
 
@@ -94,7 +94,7 @@ public abstract class GameRules {
 	 * @return an array of legal moves
 	 */
 	public Move[] calculateLegalMoves(Position position) {
-		List<Move> res = new ArrayList<Move>();
+		List<Move> res = new ArrayList<>();
 
 		// get all the possible jumps that can be made
 		for (int row = 0; row < getBoardSize(); row++) {
@@ -144,7 +144,7 @@ public abstract class GameRules {
 		if (position.getPieceAt(square).getColour() != position.getToMove()) {
 			return new Move[0];
 		}
-		List<Move> res = new ArrayList<Move>();
+		List<Move> res = new ArrayList<>();
 		for (MoveDirection dir : MoveDirection.values()) {
 			List<Move> jumps = getJumps(position, square, dir);
 			if (jumps != null) {
@@ -185,7 +185,7 @@ public abstract class GameRules {
 	 * @return a list of matching rulesets
 	 */
 	public static List<GameRules> getMatchingRules(int size) {
-		List<GameRules> res = new ArrayList<GameRules>();
+		List<GameRules> res = new ArrayList<>();
 		for (String ruleId : MiscUtil.asSortedList(allRulesets.keySet())) {
 			GameRules r = getRules(ruleId);
 			if (r.getBoardSize() == size) {

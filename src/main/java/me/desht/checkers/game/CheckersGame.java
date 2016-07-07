@@ -34,7 +34,7 @@ public class CheckersGame implements CheckersPersistable {
 		SETTING_UP, RUNNING, FINISHED,
 	}
 
-	private final List<GameListener> listeners = new ArrayList<GameListener>();
+	private final List<GameListener> listeners = new ArrayList<>();
 
 	private final String gameName;
 	private final Position position;
@@ -125,10 +125,10 @@ public class CheckersGame implements CheckersPersistable {
 
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 
 		Move[] moves = getPosition().getMoveHistory();
-		List<Integer> encoded = new ArrayList<Integer>(moves.length);
+		List<Integer> encoded = new ArrayList<>(moves.length);
 		for (Move move : moves) {
 			encoded.add(move.encode());
 		}
@@ -215,7 +215,7 @@ public class CheckersGame implements CheckersPersistable {
 		return players[getPosition().getToMove().getIndex()];
 	}
 
-	public String getPlayerId(PlayerColour colour) {
+	private String getPlayerId(PlayerColour colour) {
 		return players[colour.getIndex()] != null ? players[colour.getIndex()].getId() : "";
 	}
 
@@ -239,7 +239,7 @@ public class CheckersGame implements CheckersPersistable {
 		return state;
 	}
 
-	public void setState(GameState newState) {
+	private void setState(GameState newState) {
 		if (newState == GameState.RUNNING) {
 			CheckersValidate.isTrue(this.state == GameState.SETTING_UP, "invalid state transition " + state + "->" + newState);
 			started = lastMoved = System.currentTimeMillis();
@@ -293,7 +293,7 @@ public class CheckersGame implements CheckersPersistable {
 		return invitedId;
 	}
 
-	public void alert(Player player, String message) {
+	private void alert(Player player, String message) {
 		MiscUtil.alertMessage(player, Messages.getString("Game.alertPrefix", getName()) + message);
 	}
 
@@ -334,7 +334,7 @@ public class CheckersGame implements CheckersPersistable {
 	 * @return a string list of game information
 	 */
 	public List<String> getGameDetail() {
-		List<String> res = new ArrayList<String>();
+		List<String> res = new ArrayList<>();
 
 		String white = hasPlayer(PlayerColour.WHITE) ? getPlayer(PlayerColour.WHITE).getDisplayName() : "?";
 		String black = hasPlayer(PlayerColour.BLACK) ? getPlayer(PlayerColour.BLACK).getDisplayName() : "?";
@@ -368,7 +368,7 @@ public class CheckersGame implements CheckersPersistable {
 	}
 
 	private List<String> getMovesAsString(Move[] moves) {
-		List<String> res = new ArrayList<String>();
+		List<String> res = new ArrayList<>();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -458,7 +458,7 @@ public class CheckersGame implements CheckersPersistable {
 		save();
 	}
 
-	public void clearInvitation() {
+	private void clearInvitation() {
 		invitedId = null;
 		openInvite = false;
 		save();

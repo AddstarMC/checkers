@@ -24,16 +24,13 @@ public class InvitePlayer extends ExpectBase {
 	public void doResponse(final UUID playerId) {
 		// Run this as a sync delayed task because we're not in the main thread at this point
 		// (coming from the AsyncPlayerChatEvent handler)
-		deferTask(playerId, new Runnable() {
-			@Override
-			public void run() {
-				Player player = Bukkit.getPlayer(playerId);
-				if (player != null) {
-					CheckersGame game = CheckersGameManager.getManager().getCurrentGame(player, true);
-					game.invitePlayer(player, inviteeName);
-				}
-			}
-		});
+		deferTask(playerId, () -> {
+            Player player = Bukkit.getPlayer(playerId);
+            if (player != null) {
+                CheckersGame game = CheckersGameManager.getManager().getCurrentGame(player, true);
+                game.invitePlayer(player, inviteeName);
+            }
+        });
 	}
 
 }

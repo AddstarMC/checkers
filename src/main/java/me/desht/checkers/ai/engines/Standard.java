@@ -20,7 +20,7 @@ public class Standard extends CheckersAI {
 	private final int maxDepth;
 	private final Evaluator evaluator;
 
-	Move selectedMove = null;
+	private Move selectedMove = null;
 
 	public Standard(String name, CheckersGame checkersGame, PlayerColour aiColour, ConfigurationSection params) {
 		super(name, checkersGame, aiColour, params);
@@ -138,7 +138,7 @@ public class Standard extends CheckersAI {
 			return false;
 		}
 
-		Map<PlayerColour, Integer> count = new HashMap<PlayerColour, Integer>();
+		Map<PlayerColour, Integer> count = new HashMap<>();
 		count.put(PlayerColour.WHITE, 0);
 		count.put(PlayerColour.BLACK, 0);
 		for (int row = 0; row < 8; row++) {
@@ -154,10 +154,6 @@ public class Standard extends CheckersAI {
 				count.put(p.getColour(), count.get(p.getColour()) + 1);
 			}
 		}
-		if (count.get(PlayerColour.WHITE) != count.get(PlayerColour.BLACK) || count.get(PlayerColour.BLACK) > 2) {
-			// both sides must have the same number of kings; only 1 or 2 each
-			return false;
-		}
-		return true;
+		return !(count.get(PlayerColour.WHITE) != count.get(PlayerColour.BLACK) || count.get(PlayerColour.BLACK) > 2);
 	}
 }

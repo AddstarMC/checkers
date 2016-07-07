@@ -44,14 +44,14 @@ import java.util.UUID;
 public class PlayerListener extends CheckersBaseListener {
 
 	private static final long MIN_ANIMATION_WAIT = 200; // milliseconds
-	private final Map<UUID,Long> lastAnimation = new HashMap<UUID, Long>();
+	private final Map<UUID,Long> lastAnimation = new HashMap<>();
 
 	// block ids to be considered transparent when calling player.getTargetBlock()
-	private static final HashSet<Byte> transparent = new HashSet<Byte>();
+	private static final HashSet<Material> transparent = new HashSet<>();
 	static {
-		transparent.add((byte) Material.AIR.getId());
-		transparent.add((byte) Material.GLASS.getId());
-		transparent.add((byte) Material.SKULL.getId());
+		transparent.add(Material.AIR);
+		transparent.add(Material.GLASS);
+		transparent.add(Material.SKULL);
 	}
 
 	public PlayerListener(CheckersPlugin plugin) {
@@ -131,7 +131,7 @@ public class PlayerListener extends CheckersBaseListener {
 
 		try {
 			if (event.getAnimationType() == PlayerAnimationType.ARM_SWING) {
-				if (holdingRightItem(player.getItemInHand())) {
+				if (holdingRightItem(player.getInventory().getItemInMainHand())) {
 					targetBlock = player.getTargetBlock(transparent, 120);
 					Debugger.getInstance().debug(2, "Player " + player.getDisplayName() + " waved at block " + targetBlock);
 					Location loc = targetBlock.getLocation();

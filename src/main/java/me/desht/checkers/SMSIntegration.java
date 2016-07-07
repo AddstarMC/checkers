@@ -16,7 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-public class SMSIntegration implements Listener {
+class SMSIntegration implements Listener {
 
 	private static final String MENU_PREFIX = "chc_";
 

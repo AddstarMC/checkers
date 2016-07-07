@@ -17,6 +17,7 @@ import me.desht.dhutils.block.MaterialWithData;
 
 import org.bukkit.configuration.Configuration;
 import org.bukkit.material.MaterialData;
+import org.jetbrains.annotations.NotNull;
 
 public class BoardStyle implements Comparable<BoardStyle>, ConfigurationListener {
 	public static final String DEFAULT_BOARD_STYLE = "gw-small";
@@ -196,6 +197,7 @@ public class BoardStyle implements Comparable<BoardStyle>, ConfigurationListener
 		return (MaterialWithData) attributes.get(WHITE_PIECE);
 	}
 
+	@NotNull
 	@Override
 	public Object onConfigurationValidate(ConfigurationManager configurationManager, String key, Object oldVal, Object newVal) {
 		if (key.equals(LIGHT_LEVEL)) {
@@ -214,7 +216,7 @@ public class BoardStyle implements Comparable<BoardStyle>, ConfigurationListener
 	}
 
 	@Override
-	public int compareTo(BoardStyle o) {
+	public int compareTo(@NotNull BoardStyle o) {
 		return getName().compareTo(o.getName());
 	}
 

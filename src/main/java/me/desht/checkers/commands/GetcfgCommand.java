@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 public class GetcfgCommand extends AbstractCheckersCommand {
 
@@ -41,8 +42,8 @@ public class GetcfgCommand extends AbstractCheckersCommand {
 		return getPluginConfiguration(null);
 	}
 
-	public List<String> getPluginConfiguration(String section) {
-		ArrayList<String> res = new ArrayList<String>();
+	private List<String> getPluginConfiguration(String section) {
+		ArrayList<String> res = new ArrayList<>();
 		Configuration config = CheckersPlugin.getInstance().getConfig();
 		ConfigurationSection cs = config.getRoot();
 
@@ -54,7 +55,7 @@ public class GetcfgCommand extends AbstractCheckersCommand {
 				cs = config.getConfigurationSection(section);
 				items = config.getDefaults().getConfigurationSection(section).getKeys(true);
 			} else {
-				items = new HashSet<String>();
+				items = new HashSet<>();
 				if (config.getDefaults().contains(section))
 					items.add(section);
 			}
@@ -69,6 +70,7 @@ public class GetcfgCommand extends AbstractCheckersCommand {
 		return res;
 	}
 
+	@NotNull
 	@Override
 	public List<String> onTabComplete(Plugin plugin, CommandSender sender, String[] args) {
 		switch (args.length) {

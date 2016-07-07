@@ -14,6 +14,7 @@ import me.desht.dhutils.Duration;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 public class WinCommand extends AbstractCheckersCommand {
 
@@ -64,6 +65,7 @@ public class WinCommand extends AbstractCheckersCommand {
 		return true;
 	}
 
+	@NotNull
 	@Override
 	public List<String> onTabComplete(Plugin plugin, CommandSender sender, String[] args) {
 		showUsage(sender);

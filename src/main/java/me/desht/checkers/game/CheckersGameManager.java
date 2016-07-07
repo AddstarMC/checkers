@@ -22,11 +22,11 @@ public class CheckersGameManager {
 	private static CheckersGameManager instance = null;
 
 	// map game name to game
-	private final Map<String,CheckersGame> checkersGames = new HashMap<String,CheckersGame>();
+	private final Map<String,CheckersGame> checkersGames = new HashMap<>();
 	// map player ID to player's active game
-	private final Map<UUID,CheckersGame> activeGame = new HashMap<UUID, CheckersGame>();
+	private final Map<UUID,CheckersGame> activeGame = new HashMap<>();
 
-	private final Set<CheckersGame> needToMigrate = new HashSet<CheckersGame>();
+	private final Set<CheckersGame> needToMigrate = new HashSet<>();
 
 	private CheckersGameManager() {
 
@@ -59,7 +59,7 @@ public class CheckersGameManager {
 	public void unregisterGame(String gameName) {
 		CheckersGame game = getGame(gameName);
 
-		List<UUID> toRemove = new ArrayList<UUID>();
+		List<UUID> toRemove = new ArrayList<>();
 		for (UUID playerName : activeGame.keySet()) {
 			if (activeGame.get(playerName) == game) {
 				toRemove.add(playerName);
@@ -77,8 +77,8 @@ public class CheckersGameManager {
 	}
 
 	public Collection<CheckersGame> listGamesSorted() {
-		SortedSet<String> sorted = new TreeSet<String>(checkersGames.keySet());
-		List<CheckersGame> res = new ArrayList<CheckersGame>();
+		SortedSet<String> sorted = new TreeSet<>(checkersGames.keySet());
+		List<CheckersGame> res = new ArrayList<>();
 		for (String name : sorted) {
 			res.add(checkersGames.get(name));
 		}
@@ -117,7 +117,7 @@ public class CheckersGameManager {
 	}
 
 	public Map<UUID, String> getCurrentGames() {
-		Map<UUID, String> res = new HashMap<UUID, String>();
+		Map<UUID, String> res = new HashMap<>();
 		for (UUID s : activeGame.keySet()) {
 			CheckersGame game = activeGame.get(s);
 			if (game != null) {
@@ -189,8 +189,8 @@ public class CheckersGameManager {
 	 * Carry out the migration of old-style player names to UUIDs.  This is done asynchronously.
 	 */
 	public void checkForUUIDMigration() {
-		final List<String> names = new ArrayList<String>();
-		final List<GameAndColour> gameAndColours = new ArrayList<GameAndColour>();
+		final List<String> names = new ArrayList<>();
+		final List<GameAndColour> gameAndColours = new ArrayList<>();
 		for (CheckersGame game : needToMigrate) {
 			if (game.hasPlayer(PlayerColour.WHITE) && game.getPlayer(PlayerColour.WHITE).isHuman()) {
 				HumanCheckersPlayer hcp = (HumanCheckersPlayer) game.getPlayer(PlayerColour.WHITE);
@@ -210,17 +210,14 @@ public class CheckersGameManager {
 		needToMigrate.clear();
 		if (names.size() > 0) {
 			LogUtils.info("migrating " + names.size() + " player names to UUID in saved game files");
-			Bukkit.getScheduler().runTaskAsynchronously(CheckersPlugin.getInstance(), new Runnable() {
-				@Override
-				public void run() {
-					UUIDFetcher uf = new UUIDFetcher(names, true);
-					try {
-						Bukkit.getScheduler().runTask(CheckersPlugin.getInstance(), new SyncTask(uf.call(), gameAndColours));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
+			Bukkit.getScheduler().runTaskAsynchronously(CheckersPlugin.getInstance(), () -> {
+                UUIDFetcher uf = new UUIDFetcher(names, true);
+                try {
+                    Bukkit.getScheduler().runTask(CheckersPlugin.getInstance(), new SyncTask(uf.call(), gameAndColours));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 		}
 	}
 

@@ -24,6 +24,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -101,7 +102,7 @@ public class BoardView implements PositionListener, ConfigurationListener, Check
 
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> result = new HashMap<String, Object>();
+		Map<String, Object> result = new HashMap<>();
 		result.put("name", name);
 		result.put("size", checkersBoard.getSize());
 		result.put("game", game == null ? "" : game.getName());
@@ -195,7 +196,7 @@ public class BoardView implements PositionListener, ConfigurationListener, Check
 		return (Boolean) attributes.get(LOCK_STAKE);
 	}
 
-	public String getDefaultTcSpec() {
+	private String getDefaultTcSpec() {
 		return (String) attributes.get(DEFAULT_TC);
 	}
 
@@ -295,7 +296,7 @@ public class BoardView implements PositionListener, ConfigurationListener, Check
 	}
 
 	public List<String> getBoardDetail() {
-		List<String> res = new ArrayList<String>();
+		List<String> res = new ArrayList<>();
 
 		String bullet = MessagePager.BULLET + ChatColor.YELLOW;
 		Cuboid bounds = checkersBoard.getFullBoard();
@@ -355,6 +356,7 @@ public class BoardView implements PositionListener, ConfigurationListener, Check
 		}
 	}
 
+	@NotNull
 	@Override
 	public Object onConfigurationValidate(ConfigurationManager configurationManager, String key, Object oldVal,
                                           Object newVal) {

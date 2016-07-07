@@ -12,6 +12,7 @@ import me.desht.dhutils.MiscUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 public class SetcfgCommand extends AbstractCheckersCommand {
 
@@ -30,7 +31,7 @@ public class SetcfgCommand extends AbstractCheckersCommand {
 
 		try {
 			if (args.length > 2) {
-				List<String> list = new ArrayList<String>(args.length - 1);
+				List<String> list = new ArrayList<>(args.length - 1);
 				list.addAll(Arrays.asList(args).subList(1, args.length));
 				configManager.set(key, list);
 			} else {
@@ -47,6 +48,7 @@ public class SetcfgCommand extends AbstractCheckersCommand {
 		return true;
 	}
 
+	@NotNull
 	@Override
 	public List<String> onTabComplete(Plugin plugin, CommandSender sender, String[] args) {
 		ConfigurationSection config = plugin.getConfig();

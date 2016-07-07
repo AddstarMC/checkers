@@ -17,7 +17,7 @@ public enum BoardRotation {
 	private final int x, z;
 	private final float yaw;
 
-	private BoardRotation(int xPositive, int zPositive, float yaw) {
+	BoardRotation(int xPositive, int zPositive, float yaw) {
 		x = xPositive;
 		z = zPositive;
 		this.yaw = yaw;
@@ -89,7 +89,7 @@ public enum BoardRotation {
 		}
 	}
 
-	public static BoardRotation getRotation(Location loc) {
+	private static BoardRotation getRotation(Location loc) {
 		double rot = loc.getYaw() % 360;
 		if (rot < 0) {
 			rot += 360;

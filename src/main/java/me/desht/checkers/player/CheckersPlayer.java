@@ -13,7 +13,7 @@ public abstract class CheckersPlayer {
 
 	private PlayerColour colour;
 
-	protected CheckersPlayer(String id, String displayName, CheckersGame game, PlayerColour colour) {
+	CheckersPlayer(String id, String displayName, CheckersGame game, PlayerColour colour) {
 		this.id = id;
 		this.displayName = displayName;
 		this.game = game;
@@ -55,7 +55,7 @@ public abstract class CheckersPlayer {
 	/**
 	 * @return the game
 	 */
-	public CheckersGame getGame() {
+	CheckersGame getGame() {
 		return game;
 	}
 

@@ -10,16 +10,16 @@ import org.bukkit.entity.Player;
 
 public abstract class YesNoResponse extends ExpectBase {
 
-	protected final CheckersGame game;
-	protected final PlayerColour offererColour;
-	protected boolean accepted;
+	final CheckersGame game;
+	final PlayerColour offererColour;
+	boolean accepted;
 
-	public YesNoResponse(CheckersGame game, PlayerColour offererColour) {
+	YesNoResponse(CheckersGame game, PlayerColour offererColour) {
 		this.game = game;
 		this.offererColour = offererColour;
 	}
 
-	public void setResponse(boolean accepted) {
+	private void setResponse(boolean accepted) {
 		this.accepted = accepted;
 	}
 

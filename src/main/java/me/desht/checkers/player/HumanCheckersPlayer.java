@@ -51,7 +51,7 @@ public class HumanCheckersPlayer extends CheckersPlayer {
 		return uuid == null ? null : Bukkit.getPlayer(uuid);
 	}
 
-    public OfflinePlayer getOfflinePlayer() {
+    private OfflinePlayer getOfflinePlayer() {
         return Bukkit.getOfflinePlayer(uuid);
     }
 

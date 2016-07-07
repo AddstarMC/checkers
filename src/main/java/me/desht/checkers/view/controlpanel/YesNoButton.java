@@ -20,7 +20,7 @@ public abstract class YesNoButton extends AbstractSignButton {
 	private final PlayerColour colour;
 	private final boolean yesOrNo;
 
-	public YesNoButton(ControlPanel panel, int x, int y, PlayerColour colour, boolean yesOrNo) {
+	YesNoButton(ControlPanel panel, int x, int y, PlayerColour colour, boolean yesOrNo) {
 		super(panel, yesOrNo ? "yesBtn" : "noBtn", null, x, y);
 		this.colour = colour;
 		this.yesOrNo = yesOrNo;

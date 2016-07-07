@@ -42,8 +42,8 @@ public class ControlPanel {
 		BoardRotation boardDir = view.getBoard().getRotation();
 		this.signDir = boardDir.getRight();
 
-		buttonLocs = new HashMap<PersistableLocation, AbstractSignButton>();
-		buttonNames = new HashMap<String, AbstractSignButton>();
+		buttonLocs = new HashMap<>();
+		buttonNames = new HashMap<>();
 		panelBlocks = getPanelPosition();
 		plyCountLabel = new PlyCountLabel(this);
 		halfMoveClockLabel = new HalfmoveClockLabel(this);
@@ -98,7 +98,7 @@ public class ControlPanel {
 		repaintControls();
 	}
 
-	public void repaintPanel(MassBlockUpdate mbu) {
+	private void repaintPanel(MassBlockUpdate mbu) {
 		if (mbu != null) {
 			panelBlocks.fill(view.getBoard().getBoardStyle().getControlPanelMaterial(), mbu);
 		} else {
@@ -117,7 +117,7 @@ public class ControlPanel {
 		updateToMoveIndicator();
 	}
 
-	public void updateToMoveIndicator() {
+	private void updateToMoveIndicator() {
 		PlayerColour toPlay = PlayerColour.NONE;
 		if (view.getGame() != null) {
 			toPlay = view.getGame().getPosition().getToMove();

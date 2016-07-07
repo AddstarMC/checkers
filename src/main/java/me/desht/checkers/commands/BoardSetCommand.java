@@ -19,6 +19,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 public class BoardSetCommand extends AbstractCheckersCommand {
 
@@ -45,7 +46,7 @@ public class BoardSetCommand extends AbstractCheckersCommand {
 		AttributeCollection viewAttrs = bv.getAttributes();
 		AttributeCollection styleAttrs = style.getAttributes();
 		boolean styleHasChanged = false;
-		Set<String> changedAttrs = new HashSet<String>();
+		Set<String> changedAttrs = new HashSet<>();
 
 		for (int i = 0; i < args.length; i += 2) {
 			String attr = args[i];
@@ -80,7 +81,7 @@ public class BoardSetCommand extends AbstractCheckersCommand {
 		return true;
 	}
 
-	@Override
+	@Override @NotNull
 	public List<String> onTabComplete(Plugin plugin, CommandSender sender, String[] args) {
 		notFromConsole(sender);
 		BoardView bv = BoardViewManager.getManager().partOfBoard(((Player)sender).getLocation());
@@ -89,8 +90,8 @@ public class BoardSetCommand extends AbstractCheckersCommand {
 		AttributeCollection viewAttrs = bv.getAttributes();
 		if (args.length % 2 == 1) {
 			// provide attribute completions
-			List<String> attrs = new ArrayList<String>(styleAttrs.listAttributeKeys(false));
-			attrs.addAll(new ArrayList<String>(viewAttrs.listAttributeKeys(false)));
+			List<String> attrs = new ArrayList<>(styleAttrs.listAttributeKeys(false));
+			attrs.addAll(new ArrayList<>(viewAttrs.listAttributeKeys(false)));
 			return filterPrefix(sender, attrs, args[l - 1]);
 		} else {
 			// provide value completions for last attribute

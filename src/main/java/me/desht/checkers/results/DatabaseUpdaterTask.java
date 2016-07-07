@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import me.desht.dhutils.Debugger;
 import me.desht.dhutils.LogUtils;
 
-public class DatabaseUpdaterTask implements Runnable {
+class DatabaseUpdaterTask implements Runnable {
 
 	private final Results handler;
 

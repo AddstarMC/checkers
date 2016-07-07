@@ -36,7 +36,7 @@ public class EnglishDraughts extends GameRules {
 		if (moving == PieceType.WHITE && to.getRow() > from.getRow() || moving == PieceType.BLACK && to.getRow() < from.getRow()) {
 			return null;  // pieces can't move backwards
 		}
-		List<Move> res = new ArrayList<Move>(1);
+		List<Move> res = new ArrayList<>(1);
 		res.add(new Move(from, to));
 		return res;
 	}
@@ -55,7 +55,7 @@ public class EnglishDraughts extends GameRules {
 		if (position.getPieceAt(over).getColour() != moving.getColour().getOtherColour() || position.isMarkedCaptured(over)) {
 			return null;
 		}
-		List<Move> res = new ArrayList<Move>(1);
+		List<Move> res = new ArrayList<>(1);
 		res.add(new Move(from, to));
 		return res;
 	}

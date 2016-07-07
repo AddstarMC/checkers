@@ -15,7 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
-public abstract class AbstractSignLabel {
+abstract class AbstractSignLabel {
 
 	private final static String ENABLED_COLOUR = ChatColor.DARK_BLUE.toString();
 	private final static String DISABLED_COLOUR = ChatColor.DARK_GRAY.toString();
@@ -26,62 +26,62 @@ public abstract class AbstractSignLabel {
 	private final PersistableLocation loc;
 	private final String labelKey;
 
-	public AbstractSignLabel(ControlPanel panel, String labelKey, int x, int y) {
+	AbstractSignLabel(ControlPanel panel, String labelKey, int x, int y) {
 		this.labelKey = labelKey;
 		this.panel = panel;
-		this.loc = getSignLocation(x, y);
+		this.loc = getSignLocation(x, y);//can be null
 	}
 
-	public abstract boolean isEnabled();
+	protected abstract boolean isEnabled();
 
 	public PersistableLocation getLocation() {
 		return loc;
 	}
 
-	public ControlPanel getPanel() {
+	ControlPanel getPanel() {
 		return panel;
 	}
 
-	public BoardView getView() {
+	BoardView getView() {
 		return getPanel().getView();
 	}
 
-	public CheckersGame getGame() {
+	CheckersGame getGame() {
 		return getView().getGame();
 	}
 
-	public boolean isReactive() {
+	boolean isReactive() {
 		return false;
 	}
 
-	public boolean gameInState(GameState state) {
+	boolean gameInState(GameState state) {
 		return getGame() != null && getGame().getState() == state;
 	}
 
-	public String getLabelColour() {
+	private String getLabelColour() {
 		if (!isEnabled()) return DISABLED_COLOUR;
 		if (!isReactive()) return NONREACTIVE_COLOUR;
 		return ENABLED_COLOUR;
 	}
 
-	public String getIndicatorColour() {
+	String getIndicatorColour() {
 		if (!isEnabled()) return DISABLED_COLOUR;
 		return INDICATOR_COLOUR;
 	}
 
-	public String[] getLabel() {
+	private String[] getLabel() {
 		String[] text = getCustomSignText();
 		if (text != null) return text;
 
 		if (labelKey == null) {
-			LogUtils.warning("Unknown label key: " + labelKey);
+			LogUtils.warning("Unknown label key: null");
 			return new String[] { "???" };
 		} else {
 			return getSignText();
 		}
 	}
 
-	protected String[] getSignText() {
+	String[] getSignText() {
 		String[] res = new String[] { "", "", "", "" };
 
 		String label = Messages.getString("ControlPanel." + labelKey);
@@ -99,7 +99,7 @@ public abstract class AbstractSignLabel {
 	 *
 	 * @return the custom sign text
 	 */
-	protected String[] getCustomSignText() {
+	String[] getCustomSignText() {
 		return null;
 	}
 
@@ -129,15 +129,21 @@ public abstract class AbstractSignLabel {
 	}
 
 	private PersistableLocation getSignLocation(int x, int y) {
-		BoardRotation boardRot = panel.getView().getBoard().getRotation();
-		BoardRotation signRot = boardRot.getRight();
-		Cuboid panelBlocks = panel.getPanelBlocks();
-		Cuboid face = panelBlocks.getFace(boardRot.getDirection().opposite());
-		int blockX = face.getLowerX() + x * boardRot.getXadjustment() + signRot.getXadjustment();
-		int blockY = face.getLowerY() + y;
-		int blockZ = face.getLowerZ() + x * boardRot.getZadjustment() + signRot.getZadjustment();
+		try {
+			BoardRotation boardRot = panel.getView().getBoard().getRotation();
+			BoardRotation signRot = boardRot.getRight();
+			Cuboid panelBlocks = panel.getPanelBlocks();
+			Cuboid face = panelBlocks.getFace(boardRot.getDirection().opposite());
+			int blockX = face.getLowerX() + x * boardRot.getXadjustment() + signRot.getXadjustment();
+			int blockY = face.getLowerY() + y;
+			int blockZ = face.getLowerZ() + x * boardRot.getZadjustment() + signRot.getZadjustment();
 
-		return new PersistableLocation(panelBlocks.getWorld(), blockX, blockY, blockZ);
+			return new PersistableLocation(panelBlocks.getWorld(), blockX, blockY, blockZ);
+		}catch (NullPointerException e){
+			e.printStackTrace();
+
+		}
+		return null;
 	}
 
 	private byte getSignDirection() {

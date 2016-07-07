@@ -214,7 +214,7 @@ public class CheckersBoard {
 		return redrawNeeded;
 	}
 
-	public boolean isOnBoard(Location loc, int minHeight, int maxHeight) {
+	private boolean isOnBoard(Location loc, int minHeight, int maxHeight) {
 		Cuboid bounds = getBoardSquares().shift(CuboidDirection.Up, minHeight).expand(CuboidDirection.Up, maxHeight - minHeight);
 		return bounds.contains(loc);
 	}
@@ -332,7 +332,8 @@ public class CheckersBoard {
 	}
 
 	void repaint(MassBlockUpdate mbu) {
-		fullBoard.fill(0, (byte)0, mbu);
+		MaterialData data  = new MaterialData(Material.AIR);
+		fullBoard.fill(data, mbu);
 		paintEnclosure(mbu);
 		paintFrame(mbu);
 		paintBoard(mbu);
@@ -350,7 +351,7 @@ public class CheckersBoard {
 		clearSelected();
 		MassBlockUpdate mbu = CraftMassBlockUpdate.createMassBlockUpdater(CheckersPlugin.getInstance(), getWorld());
 		paintBoard(mbu);
-		getBoardSquares().shift(CuboidDirection.Up, 1).expand(CuboidDirection.Up, getBoardStyle().getHeight() - 1).fill(0, (byte)0, mbu);
+		getBoardSquares().shift(CuboidDirection.Up, 1).expand(CuboidDirection.Up, getBoardStyle().getHeight() - 1).fill(new MaterialData(Material.AIR), mbu);
 		mbu.notifyClients();
 	}
 
@@ -503,7 +504,7 @@ public class CheckersBoard {
 
 	public void clearAll() {
 		MassBlockUpdate mbu = CraftMassBlockUpdate.createMassBlockUpdater(CheckersPlugin.getInstance(), getFullBoard().getWorld());
-		getFullBoard().fill(0, (byte) 0, mbu);
+		getFullBoard().fill(new MaterialData(Material.AIR), mbu);
 		mbu.notifyClients();
 	}
 

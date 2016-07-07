@@ -7,6 +7,7 @@ import me.desht.checkers.game.CheckersGameManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 public class StartCommand extends AbstractCheckersCommand {
 
@@ -28,6 +29,7 @@ public class StartCommand extends AbstractCheckersCommand {
 		return true;
 	}
 
+	@NotNull
 	@Override
 	public List<String> onTabComplete(Plugin plugin, CommandSender sender, String[] args) {
 		if (args.length == 1 && sender instanceof Player) {

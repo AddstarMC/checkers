@@ -17,7 +17,6 @@ package me.desht.checkers;
     along with Checkers.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.io.IOException;
 import java.util.List;
 
 import me.desht.checkers.ai.AIFactory;
@@ -51,7 +50,6 @@ import me.desht.checkers.commands.TimeControlCommand;
 import me.desht.checkers.commands.UndoCommand;
 import me.desht.checkers.commands.WinCommand;
 import me.desht.checkers.commands.YesCommand;
-import me.desht.checkers.game.CheckersGameManager;
 import me.desht.checkers.listeners.FlightListener;
 import me.desht.checkers.listeners.PlayerListener;
 import me.desht.checkers.listeners.PlayerTracker;
@@ -78,10 +76,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
-import org.mcstats.Metrics;
-import org.mcstats.Metrics.Plotter;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public class CheckersPlugin extends JavaPlugin implements ConfigurationListener {
 
@@ -170,8 +167,6 @@ public class CheckersPlugin extends JavaPlugin implements ConfigurationListener 
 			dynmapIntegration.setActive(true);
 		}
 
-		setupMetrics();
-
 		tickTask = new TickTask();
 		tickTask.runTaskTimer(this, 20L, 20L);
 	}
@@ -218,6 +213,7 @@ public class CheckersPlugin extends JavaPlugin implements ConfigurationListener 
 		if (dynmapIntegration != null) {
 			dynmapIntegration.setActive(false);
 		}
+		aiFactory.clearDown();
 
 		persistenceHandler.save();
 
@@ -274,27 +270,6 @@ public class CheckersPlugin extends JavaPlugin implements ConfigurationListener 
         return landslideIntegration;
     }
 
-    private void setupMetrics() {
-		if (!getConfig().getBoolean("mcstats")) {
-			return;
-		}
-		try {
-			Metrics metrics = new Metrics(this);
-
-			metrics.createGraph("Boards Created").addPlotter(new Plotter() {
-				@Override
-				public int getValue() { return BoardViewManager.getManager().listBoardViews().size();	}
-			});
-			metrics.createGraph("Games in Progress").addPlotter(new Plotter() {
-				@Override
-				public int getValue() { return CheckersGameManager.getManager().listGames().size(); }
-			});
-			metrics.start();
-		} catch (IOException e) {
-			LogUtils.warning("Can't submit metrics data: " + e.getMessage());
-		}
-	}
-
     private void setupLandslide(PluginManager pm) {
         Plugin lsl = pm.getPlugin("Landslide");
         if (lsl != null && lsl.isEnabled() && lsl instanceof LandslidePlugin) {
@@ -304,21 +279,21 @@ public class CheckersPlugin extends JavaPlugin implements ConfigurationListener 
 
 	private void setupVault(PluginManager pm) {
 		Plugin vault =  pm.getPlugin("Vault");
-		if (vault != null && vault.isEnabled()) {
-            int ver = PluginVersionChecker.getRelease(vault.getDescription().getVersion());
-            boolean legacyMode = ver < 1003000;  // 1.3.0
+		int ver = PluginVersionChecker.getRelease(vault.getDescription().getVersion());
+		boolean legacyMode = ver < 1003000;  // 1.3.0
+		if (vault != null && vault.isEnabled() &&  !legacyMode ) {
             Debugger.getInstance().debug("Detected Vault v" + vault.getDescription().getVersion());
             if (legacyMode) {
                 LogUtils.warning("Detected an older version of Vault.  Correct UUID functionality requires Vault 1.4.1 or later.");
             }
             Economy econ = setupEconomy();
             if (econ != null) {
-                EconomyUtil.init(econ, legacyMode);
+                EconomyUtil.init(econ);
             } else {
                 LogUtils.warning("No economy plugin detected - game stakes not available");
             }
 		} else {
-			LogUtils.warning("Vault not loaded: game stakes not available");
+			LogUtils.warning("Vault not loaded: game stakes not available. Vault must be > 1.3.0");
 		}
 	}
 
@@ -389,6 +364,7 @@ public class CheckersPlugin extends JavaPlugin implements ConfigurationListener 
 		}
 	}
 
+	@NotNull
 	@Override
 	public Object onConfigurationValidate(ConfigurationManager configurationManager, String key, Object oldVal, Object newVal) {
 		if (key.startsWith("auto_delete.") || key.equals("forfeit_timeout")) {

@@ -35,14 +35,13 @@ public abstract class CheckersAI implements Runnable {
 	private final String name;
 	private final CheckersGame checkersGame;
 	private final PlayerColour aiColour;
-	protected final ConfigurationSection params;
-	protected final String gameDetails;
+	private final String gameDetails;
 
 	public CheckersAI(String name, CheckersGame checkersGame, PlayerColour aiColour, ConfigurationSection params) {
 		this.name = name;
 		this.checkersGame = checkersGame;
 		this.aiColour = aiColour;
-		this.params = params;
+		ConfigurationSection params1 = params;
 		this.gameDetails = "game [" + checkersGame.getName() + "] AI [" + getName() + "]: ";
 	}
 
@@ -53,7 +52,7 @@ public abstract class CheckersAI implements Runnable {
 	/**
 	 * Perform the implementation-specfic steps needed to cleanly shuto down this AI instance.
 	 */
-	public abstract void shutdown();
+	protected abstract void shutdown();
 
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
@@ -116,11 +115,11 @@ public abstract class CheckersAI implements Runnable {
 		return CheckersAI.AI_PREFIX + fmt + ChatColor.RESET;
 	}
 
-	public CheckersGame getCheckersGame() {
+	protected CheckersGame getCheckersGame() {
 		return checkersGame;
 	}
 
-	protected boolean isDrawOfferedToAI() {
+	private boolean isDrawOfferedToAI() {
 		return drawOffered;
 	}
 
@@ -128,7 +127,7 @@ public abstract class CheckersAI implements Runnable {
 		this.drawOffered = drawOffered;
 	}
 
-	public PlayerColour getColour() {
+	protected PlayerColour getColour() {
 		return aiColour;
 	}
 
@@ -288,7 +287,7 @@ public abstract class CheckersAI implements Runnable {
 		pendingAction = accept ? PendingAction.DRAW_ACCEPTED : PendingAction.DRAW_DECLINED;
 	}
 
-	protected void undoOfferResponse(boolean accept) {
+	private void undoOfferResponse(boolean accept) {
 		pendingAction = accept ? PendingAction.UNDO_ACCEPTED : PendingAction.UNDO_DECLINED;
 	}
 

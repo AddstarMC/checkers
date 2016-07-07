@@ -23,11 +23,11 @@ public class Results {
 
 	private final ResultsDB db;
 	private final List<ResultEntry> entries = Collections.synchronizedList(new ArrayList<ResultEntry>());
-	private final Map<String, ResultViewBase> views = new ConcurrentHashMap<String, ResultViewBase>();
+	private final Map<String, ResultViewBase> views = new ConcurrentHashMap<>();
 
 	private boolean databaseLoaded = false;
 
-	private final BlockingQueue<DatabaseSavable> pendingUpdates = new LinkedBlockingQueue<DatabaseSavable>();
+	private final BlockingQueue<DatabaseSavable> pendingUpdates = new LinkedBlockingQueue<>();
 
 	/**
 	 * Create the singleton results handler - only called from getResultsHandler once
@@ -129,7 +129,7 @@ public class Results {
 	 * @return	A list of ResultEntry objects
 	 */
 	public List<ResultEntry> getEntries() {
-		return new ArrayList<ResultEntry>(entries);
+		return new ArrayList<>(entries);
 	}
 
 	/**
@@ -172,25 +172,22 @@ public class Results {
 	 * will not be available until this has finished.
 	 */
 	private void loadEntriesFromDatabase() {
-		Bukkit.getScheduler().runTaskAsynchronously(CheckersPlugin.getInstance(), new Runnable() {
-			@Override
-			public void run() {
-				try {
-					entries.clear();
-					Statement stmt = getDBConnection().createStatement();
-					ResultSet rs = stmt.executeQuery("SELECT * FROM " + getTableName("results"));
-					while (rs.next()) {
-						ResultEntry e = new ResultEntry(rs);
-						entries.add(e);
-					}
-					rebuildViews();
-					Debugger.getInstance().debug("Results data loaded from database");
-					databaseLoaded = true;
-				} catch (SQLException e) {
-					LogUtils.warning("SQL query failed: " + e.getMessage());
-				}
-			}
-		});
+		Bukkit.getScheduler().runTaskAsynchronously(CheckersPlugin.getInstance(), () -> {
+            try {
+                entries.clear();
+                Statement stmt = getDBConnection().createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM " + getTableName("results"));
+                while (rs.next()) {
+                    ResultEntry e = new ResultEntry(rs);
+                    entries.add(e);
+                }
+                rebuildViews();
+                Debugger.getInstance().debug("Results data loaded from database");
+                databaseLoaded = true;
+            } catch (SQLException e) {
+                LogUtils.warning("SQL query failed: " + e.getMessage());
+            }
+        });
 	}
 
 	/**

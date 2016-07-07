@@ -4,9 +4,9 @@ import me.desht.checkers.game.CheckersGame;
 
 public abstract class CheckersGameEvent extends CheckersEvent {
 
-	protected final CheckersGame game;
+	private final CheckersGame game;
 
-	public CheckersGameEvent(CheckersGame game) {
+	CheckersGameEvent(CheckersGame game) {
 		this.game = game;
 	}
 

@@ -5,7 +5,7 @@ import me.desht.checkers.view.BoardViewManager;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class TickTask extends BukkitRunnable {
+class TickTask extends BukkitRunnable {
 
 	@Override
 	public void run() {

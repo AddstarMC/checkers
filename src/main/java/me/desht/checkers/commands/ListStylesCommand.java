@@ -8,6 +8,7 @@ import me.desht.dhutils.MessagePager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 public class ListStylesCommand extends AbstractCheckersCommand {
 
@@ -38,6 +39,7 @@ public class ListStylesCommand extends AbstractCheckersCommand {
 		return true;
 	}
 
+	@NotNull
 	@Override
 	public List<String> onTabComplete(Plugin plugin, CommandSender sender, String[] args) {
 		showUsage(sender);
