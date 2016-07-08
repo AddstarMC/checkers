@@ -34,13 +34,13 @@ dynmap:
   min_zoom: 0
   layer_priority: 1
 effects:
-  game_lost: sound,name=enderman_death
-  game_won: sound,name=level_up
-  piece_captured: explosion
-  piece_moved: sound,name=item_pickup
+  game_lost: sound,name=ENTITY_ENDERMEN_DEATH
+  game_won: sound,name=ENTITY_PLAYER_LEVELUP
+  piece_captured: ENTITY_GENERIC_EXPLODE
+  piece_moved: sound,name=ENTITY_ITEM_PICKUP
   piece_riding: true
-  piece_selected: sound,name=note_sticks
-  piece_unselected: sound,name=note_bass
+  piece_selected: sound,name=BLOCK_NOTE_SNARE
+  piece_unselected: sound,name=BLOCK_NOTE_BASS
   teleport_in: effect,name=ender_signal
   teleport_out: effect,name=smoke,data=4
   volume: 1.0
