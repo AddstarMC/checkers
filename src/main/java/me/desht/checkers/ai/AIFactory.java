@@ -2,7 +2,6 @@ package me.desht.checkers.ai;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +19,7 @@ import me.desht.checkers.Messages;
 import me.desht.checkers.game.CheckersGame;
 import me.desht.checkers.model.PlayerColour;
 import me.desht.dhutils.Debugger;
+import me.desht.dhutils.JARUtil;
 import me.desht.dhutils.LogUtils;
 import me.desht.dhutils.MiscUtil;
 
@@ -160,9 +160,9 @@ public class AIFactory {
 
 		// first pull in the core definitions from the JAR file resource...
 		try {
-			InputStream in = CheckersPlugin.getInstance().getResource(AI_CORE_DEFS);
-			InputStreamReader reader = new InputStreamReader(in);
-			coreAIdefs = YamlConfiguration.loadConfiguration(reader);
+			JARUtil ju = new JARUtil(CheckersPlugin.getInstance());
+			InputStream in = ju.openResourceNoCache(AI_CORE_DEFS);
+			coreAIdefs = YamlConfiguration.loadConfiguration(in);
 		} catch (Exception e) {
 			LogUtils.severe("Can't load AI definitions: " + e.getMessage());
 			return;
